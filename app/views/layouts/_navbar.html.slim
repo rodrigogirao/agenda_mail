@@ -11,13 +11,10 @@ nav.navbar.navbar-default
       ul.nav.navbar-nav.navbar-right
         li.dropdown
           a.dropdown-toggle data-toggle="dropdown" href="#"
-            i.fa.fa-bell-o
-            p.notification 5
-            p Notifications
+            i.fa.fa-gear
+            p Opções
             b.caret
           ul.dropdown-menu
-            li
-              a href="#"  Notification 1
             li
               a href="#"  Notification 2
             li
@@ -26,7 +23,5 @@ nav.navbar.navbar-default
               a href="#"  Notification 4
             li
               a href="#"  Another notification
-        li
-          a href="#"
-            i.fa.fa-gear
-            p Settings
+            li
+              = link_to 'Sair', destroy_user_session_path, method: :delete

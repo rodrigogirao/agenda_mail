@@ -15,8 +15,6 @@
 //= require paper-dashboard/assets/js/jquery-1.10.2
 //= require paper-dashboard/assets/js/bootstrap.min
 //= require paper-dashboard/assets/js/bootstrap-checkbox-radio
-//= require paper-dashboard/assets/js/chartist.min
 //= require paper-dashboard/assets/js/bootstrap-notify
 //= require paper-dashboard/assets/js/paper-dashboard
-//= require paper-dashboard/assets/js/demo
 //= require_tree .
