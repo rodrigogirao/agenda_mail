@@ -1,6 +1,6 @@
-.container-fluid style="width:50%;"
+.container-fluid#login
   .row
-    .col-md-12
+    .col-lg-5.col-lg-offset-3.col-md-7.col-md-offset-4
       .card
         .header
           h4.title AgendaMail
@@ -17,6 +17,10 @@
                 .form-group.login_input
                   = f.label 'Senha'
                   = f.password_field :password, class: 'form-control border-input', placeholder: 'Senha'
+            .row
+              .col-md-9
+                .form-group.login_input
+                  = render "devise/shared/links"
             .text-center
               button.btn.btn-info.btn-fill.btn-wd type="submit"  Entrar
 

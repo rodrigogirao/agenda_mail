@@ -28,7 +28,7 @@ lbd = {
     },
 
     initRightMenu: function(){
-         if(!navbar_initialized){
+         if(!navbar_initialized && !$('#login').length){
             $off_canvas_sidebar = $('nav').find('.navbar-collapse').first().clone(true);
 
             $sidebar = $('.sidebar');

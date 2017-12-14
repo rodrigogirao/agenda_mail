@@ -1,3 +1,15 @@
 .login_input{
   margin-left: 15px;
 }
+
+
+.centralized_outer{
+  position: relative;
+  width: 100%;
+}
+
+.centralized_inner{
+  left: 50%;
+  position: absolute;
+  transform: translateX(-50%);
+}
