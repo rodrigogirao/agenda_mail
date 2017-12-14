@@ -13,5 +13,6 @@ module AgendaMail
 
     config.assets.paths << Rails.root.join('vendor', 'assets')
 
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
   end
 end
