@@ -6,6 +6,5 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:edit,:update]
-  get '/index' => "pages#index" , as: 'index'
-  get '/logged' => "pages#logged" , as: 'logged'
+  resources :messages
 end

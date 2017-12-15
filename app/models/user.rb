@@ -5,4 +5,7 @@ class User < ApplicationRecord
          :rememberable, :trackable, :validatable
 
   validates_presence_of :name
+
+  has_many :messages, foreign_key: 'to'
+
 end

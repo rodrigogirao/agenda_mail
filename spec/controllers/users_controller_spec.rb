@@ -45,7 +45,7 @@ RSpec.describe UsersController, type: :controller do
 
     it 'redirect to success page' do
       patch :update, params: { id: user.id, user: {name: 'Editado',email: 'editado@email.com'}}
-      expect(response).to redirect_to logged_path
+      expect(response).to redirect_to messages_path
     end
 
     it 'redirect to edit on error' do

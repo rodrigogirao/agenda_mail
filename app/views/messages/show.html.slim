@@ -1,0 +1,13 @@
+.container-fluid
+  .row
+    .col-md-12
+      .card
+        .header
+          h4.title #{@message.title}
+          /p.category Here is a subtitle for this table
+        .content
+          span Mensagem de: #{@message.sender_email}
+          span.message_date #{@message.created_at.strftime("%d/%m/%Y")} | #{@message.created_at.to_s(:time)}
+          hr
+          p.message_content #{@message.content}
+

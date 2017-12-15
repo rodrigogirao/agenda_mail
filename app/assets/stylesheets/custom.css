@@ -13,3 +13,12 @@
   position: absolute;
   transform: translateX(-50%);
 }
+
+.unread{
+  background-color: #FFFCF5;
+  font-weight: bold;
+}
+
+.message_date{
+  float: right;
+}

@@ -1,0 +1,22 @@
+.container-fluid
+  .row
+    .col-md-12
+      .card
+        .header
+          h4.title Caixa de Entrada
+        .content.table-responsive.table-full-width
+          table.table
+            thead
+              th
+              th
+              th
+              th
+            tbody
+              - @messages.each do |message|
+                tr class="#{'unread' if message.unread?}"
+                  td #{message.id}
+                  td #{message.sender.name}
+                  td
+                    = link_to message.title, message_path(message)
+                  td #{message_date(message)}
+

@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     end
     if @user.update(user_params)
       bypass_sign_in(@user) # não desloga usuário se alterar senha
-      redirect_to logged_path
+      redirect_to messages_path
     else
       redirect_to edit_user_path(id: @user.id)
     end
