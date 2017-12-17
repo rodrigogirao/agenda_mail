@@ -5,8 +5,8 @@ RSpec.describe MessagesController, type: :controller do
   let(:user) { FactoryBot.create(:user)}
   let(:user1) { FactoryBot.create(:user)}
   let(:master) { FactoryBot.create(:user,:master)}
-  let(:message) { FactoryBot.create(:message,to: user.id)}
-  let(:message1) { FactoryBot.create(:message,to: user1.id)}
+  let(:message) { FactoryBot.create(:message,to: user.id,from: user1.id)}
+  let(:message1) { FactoryBot.create(:message,to: user1.id,from: user.id)}
   let(:read_message) { FactoryBot.create(:message,:read,to: user.id)}
   let(:archived_message) { FactoryBot.create(:message,:archived,to: user.id)}
   let(:archived_message1) { FactoryBot.create(:message,:archived,to: user1.id)}
@@ -181,6 +181,19 @@ RSpec.describe MessagesController, type: :controller do
       read_message
       get :archived
       expect(assigns(:messages).size).to eq 2
+    end
+  end
+
+  describe '#sent' do
+    before do
+      sign_in user
+    end
+
+    it 'show all sent messages' do
+      message
+      message1
+      get :sent
+      expect(assigns(:messages)).to eq [message1]
     end
   end
 end

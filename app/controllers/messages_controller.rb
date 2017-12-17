@@ -18,7 +18,7 @@ class MessagesController < ApplicationController
   end
 
   def index
-    @messages = current_user.master? ? Message.includes(:sender).master_messages.ordered : Message.includes(:sender).sent_to(current_user).ordered
+    @messages = current_user.master? ? Message.master_messages.ordered : Message.sent_to(current_user).ordered
   end
 
   def show
@@ -48,8 +48,12 @@ class MessagesController < ApplicationController
     end
   end
 
+  def sent
+    @messages = Message.sent_from(current_user)
+  end
+
   def archived
-    @messages = Message.archived
+    @messages = Message.includes(:sender).archived
   end
   private
 

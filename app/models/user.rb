@@ -10,4 +10,7 @@ class User < ApplicationRecord
 
   has_many :messages, foreign_key: 'to'
 
+  def messages_sent
+    Message.sent_from(self)
+  end
 end

@@ -14,4 +14,8 @@ module ApplicationHelper
   def archived_count
     Message.archived.size
   end
+
+  def users_count
+    User.normal.size
+  end
 end

@@ -14,8 +14,8 @@
                 th
               tbody
                 - @messages.each do |message|
-                  tr class="#{'unread' if message.unread?}"
-                    td #{message.sender.name}
+                  tr.clickable class="#{'unread' if message.unread?}"
+                    td #{message.sender_name}
                     td.message_content
                       = link_to message.title, message_path(message), class: 'view_message'
                     td #{message_date(message)}

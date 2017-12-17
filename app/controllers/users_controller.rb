@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :set_user
+  before_action :set_user, except: [:index]
 
   def edit
 
@@ -17,6 +17,16 @@ class UsersController < ApplicationController
     else
       redirect_to edit_user_path(id: @user.id), flash: {danger: 'Houve um erro.'}
     end
+  end
+
+  def index
+    @users = User.normal
+  end
+
+  def messages
+    @user = User.find(params[:id])
+    @sent = Message.sent_from(@user)
+    @received = Message.sent_to(@user)
   end
 
   private

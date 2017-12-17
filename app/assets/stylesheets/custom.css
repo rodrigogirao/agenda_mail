@@ -27,6 +27,12 @@
   margin-top: 5em;
 }
 
+.clickable:hover{
+  border-left: 2px solid;
+}
 
+.clickable_user:hover{
+  border-left: 2px solid;
+}
 
 

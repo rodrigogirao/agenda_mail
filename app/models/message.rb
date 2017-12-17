@@ -11,10 +11,11 @@ class Message < ApplicationRecord
   delegate :name,:email, to: :sender, prefix: true
   delegate :name, to: :receiver, prefix: true
 
-  scope :sent_to, -> (user) { where(to: user.id).where.not(status: 2)}
+  scope :sent_to, -> (user) { includes(:sender).where(to: user.id).where.not(status: 2)}
+  scope :sent_from, -> (user) { includes(:receiver).where(from: user.id).where.not(status: 2)}
   scope :all_sent_to, -> (user) { where(to: user.id)}
   scope :ordered, -> {order('created_at DESC')}
-  scope :master_messages, -> { where.not(status: 2)}
+  scope :master_messages, -> { includes(:sender).where.not(status: 2)}
   attr_accessor :receiver_email
 
   def update_tracker

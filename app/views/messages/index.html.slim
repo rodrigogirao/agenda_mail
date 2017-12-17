@@ -19,9 +19,9 @@
                 th
               tbody
                 - @messages.each do |message|
-                  tr class="#{'unread' if message.unread?}"
+                  tr.clickable class="#{'unread' if message.unread?}"
                     td #{check_box_tag 'messages_ids[]',message.id, false, class: 'messages_ids'}
-                    td #{message.sender.name}
+                    td #{message.sender_name}
                     td.message_content
                       = link_to message.title, message_path(message), class: 'view_message'
                     td #{message_date(message)}
