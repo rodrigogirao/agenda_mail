@@ -35,4 +35,10 @@
 
             .text-center
               button.btn.btn-info.btn-fill.btn-wd type="submit"  Editar Perfil
-
+    - unless current_user.master?
+      .col-lg-3.col-md-3
+        .card
+          .header
+            h4.title Token Para API
+            span#see_token Ver
+            p.category#token style="display:none;" #{current_user.try(:token)}

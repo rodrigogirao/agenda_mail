@@ -18,11 +18,12 @@ class Message < ApplicationRecord
   scope :master_messages, -> { includes(:sender).where.not(status: 2)}
   attr_accessor :receiver_email
 
+  # callback on update
   def update_tracker
     if status_changed?
-      if read? && status_was == 'unread'
+      if read? && status_was == 'unread' #only update visualized if status change from unread
         self.visualized = Time.now
-      elsif archived? && status_was != 'archived'
+      elsif archived? && status_was != 'archived' #only update archived if status wasn't already archived
         self.archived = Time.now
       end
     end
