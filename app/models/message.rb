@@ -19,7 +19,7 @@ class Message < ApplicationRecord
     if status_changed?
       if read? && status_was == 'unread'
         self.visualized = Time.now
-      elsif archived?
+      elsif archived? && status_was != 'archived'
         self.archived = Time.now
       end
     end

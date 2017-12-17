@@ -19,7 +19,8 @@ html
     .wrapper
         = render 'layouts/sidebar'
         .main-panel
+            = render 'layouts/messages'
             = render 'layouts/navbar'
-            .content
+            .content data-unread="#{current_user.messages.unread.size}"
                 = yield
             = render 'layouts/footer'

@@ -4,14 +4,14 @@
       .card
         .header
           h4.title AgendaMail
-          p.category Acesse sua conta.
+          p.category Escreva a mensagem.
         .content.table-responsive.table-full-width
           = form_for @message do |f|
             .row
               .col-md-11
                 .form-group.login_input
                   = f.label 'Para:'
-                  = f.text_field :receiver_email, class: 'form-control border-input'
+                  = f.text_field :receiver_email, class: 'form-control border-input', placeholder: 'Email'
             .row
               .col-md-11
                 .form-group.login_input

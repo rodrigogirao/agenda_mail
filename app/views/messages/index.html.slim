@@ -2,21 +2,29 @@
   .row
     .col-md-12
       .card
-        .header
-          h4.title Caixa de Entrada
-        .content.table-responsive.table-full-width
-          table.table
-            thead
-              th
-              th
-              th
-              th
-            tbody
-              - @messages.each do |message|
-                tr class="#{'unread' if message.unread?}"
-                  td #{message.id}
-                  td #{message.sender.name}
-                  td
-                    = link_to message.title, message_path(message)
-                  td #{message_date(message)}
-
+        = form_tag archive_multiple_path, method: :patch, remote: true do
+          .header
+            h4.title Caixa de Entrada
+            span.message_date
+              = button_tag(type: 'submit', class: 'btn btn-default') do
+                span Excluir Selecionadas
+                i.fa.fa-2x.fa-trash
+          .content.table-responsive.table-full-width
+            table.table
+              thead
+                th
+                th
+                th
+                th
+                th
+              tbody
+                - @messages.each do |message|
+                  tr class="#{'unread' if message.unread?}"
+                    td #{check_box_tag 'messages_ids[]',message.id, false, class: 'messages_ids'}
+                    td #{message.sender.name}
+                    td.message_content
+                      = link_to message.title, message_path(message), class: 'view_message'
+                    td #{message_date(message)}
+                    td
+                      = button_tag(type: 'button',class: 'btn btn-default btn-xs single_archive') do
+                        i.fa.fa-2x.fa-trash

@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
   def new
     @message = Message.new
   end
@@ -7,13 +8,12 @@ class MessagesController < ApplicationController
   def create
     user = User.find_by_email(message_params[:receiver_email])
     @message = Message.new(message_params.merge(from: current_user.id))
-    if user
-      @message.to= user.id
-    end
+    @message.to = user.id if user
+
     if @message.save
-      redirect_to messages_path
+      redirect_to messages_path , notice: 'Mensagem enviada com sucesso.'
     else
-      redirect_to new_message_path
+      redirect_to new_message_path, flash: {danger: 'Houve um erro'}
     end
   end
 
@@ -25,6 +25,26 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     if @message.unread?
       @message.read!
+    end
+  end
+
+  def archive
+    @message = Message.find_by_title(params[:title])
+    @message.archived!
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def archive_multiple
+    messages = Message.find(params[:messages_ids])
+    messages.each do |message|
+      message.archived!
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 

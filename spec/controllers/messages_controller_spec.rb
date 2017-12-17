@@ -5,6 +5,7 @@ RSpec.describe MessagesController, type: :controller do
   let(:user) { FactoryBot.create(:user)}
   let(:user1) { FactoryBot.create(:user)}
   let(:message) { FactoryBot.create(:message,to: user.id)}
+  let(:read_message) { FactoryBot.create(:message,:archived,to: user.id)}
   let(:archived_message) { FactoryBot.create(:message,:archived,to: user.id)}
 
   describe '#new' do
@@ -94,8 +95,29 @@ RSpec.describe MessagesController, type: :controller do
       expect(message.visualized).to_not be_nil
     end
   end
-end
 
+  describe '#archive_multiple' do
+    before do
+      sign_in user
+    end
+
+    it 'archives multiples messages' do
+      patch 'archive_multiple', params: {messages_ids: [message.id,read_message.id], format: :js}
+      expect(message.reload.archived?).to eq true
+    end
+  end
+
+  describe '#archive' do
+    before do
+      sign_in user
+    end
+
+    it 'archives one messages' do
+      patch 'archive', params: {title: message.title, format: :js}
+      expect(message.reload.archived?).to eq true
+    end
+  end
+end
 
 def create_message
   post :create, params:

@@ -11,7 +11,7 @@
       li class="#{ active?(messages_path)} hide_sidebar"
         a href="/messages"
           i.fa.fa-envelope-o
-          p Mensagens (#{current_user.messages.unread.size})
+          p#unread_messages
       li class="#{ active?('TODO')} hide_sidebar"
         a href="/messages"
           i.fa.fa-archive
