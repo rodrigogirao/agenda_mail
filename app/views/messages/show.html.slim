@@ -7,6 +7,9 @@
           /p.category Here is a subtitle for this table
         .content
           span Mensagem de: #{@message.sender_email}
+          - if current_user.master?
+            br/
+            span Mensagem para: #{@message.receiver.email}
           span.message_date #{@message.created_at.strftime("%d/%m/%Y")} | #{@message.created_at.to_s(:time)}
           hr
           p.message_content #{@message.content}

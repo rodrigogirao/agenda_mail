@@ -4,16 +4,18 @@
       a.simple-text href="http://www.creative-tim.com"
         | AgendaMail
     ul.nav
-      li class="#{ active?(new_message_path)} hide_sidebar"
-        a href="/messages/new"
-          i.fa.fa-pencil
-          p Escrever
+      - unless current_user.master?
+        li class="#{ active?(new_message_path)} hide_sidebar"
+          a href="/messages/new"
+            i.fa.fa-pencil
+            p Escrever
       li class="#{ active?(messages_path)} hide_sidebar"
         a href="/messages"
           i.fa.fa-envelope-o
           p#unread_messages
-      li class="#{ active?('TODO')} hide_sidebar"
-        a href="/messages"
-          i.fa.fa-archive
-          p Arquivadas
+      - if current_user.master?
+        li class="#{ active?(archived_path)} hide_sidebar"
+          a href="/archived"
+            i.fa.fa-archive
+            p#archived_messages
 

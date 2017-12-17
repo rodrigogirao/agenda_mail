@@ -4,16 +4,3 @@ $(document).on('turbolinks:load',function (){
   });
 });
 
-
-$(document).on('DOMNodeInserted', function(event){
-  if($(event).hasClass("alert")){
-    console.log('entrou')
-    $.notify({
-      // options
-      message: 'Hello World'
-    },{
-      // settings
-      type: 'danger'
-    });
-  }
-});

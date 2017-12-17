@@ -6,4 +6,7 @@ $.each($('.messages_ids:checkbox:checked'),function(){
   }
   $('.content').first().data('unread',$('.content').first().data('unread') - count)
   $('#unread_messages').text('Mensagens (' + $('.content').first().data('unread') + ')')
+
+  $('.content').first().data('archived',$('.content').first().data('archived') + 1)
+  $('#archived_messages').text('Mensagens (' + $('.content').first().data('archived') + ')')
 });

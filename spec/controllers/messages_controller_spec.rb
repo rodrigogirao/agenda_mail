@@ -4,9 +4,12 @@ RSpec.describe MessagesController, type: :controller do
 
   let(:user) { FactoryBot.create(:user)}
   let(:user1) { FactoryBot.create(:user)}
+  let(:master) { FactoryBot.create(:user,:master)}
   let(:message) { FactoryBot.create(:message,to: user.id)}
-  let(:read_message) { FactoryBot.create(:message,:archived,to: user.id)}
+  let(:message1) { FactoryBot.create(:message,to: user1.id)}
+  let(:read_message) { FactoryBot.create(:message,:read,to: user.id)}
   let(:archived_message) { FactoryBot.create(:message,:archived,to: user.id)}
+  let(:archived_message1) { FactoryBot.create(:message,:archived,to: user1.id)}
 
   describe '#new' do
     before do
@@ -50,50 +53,98 @@ RSpec.describe MessagesController, type: :controller do
   end
 
   describe '#index' do
-    before do
-      sign_in user
+    context 'when is normal user' do
+      before do
+        sign_in user
+      end
+
+      it 'list all personal non archived messages' do
+        message
+        archived_message
+        get :index
+        expect(assigns(:messages)).to eq([message])
+      end
+
+      it 'can be reached' do
+        get :index
+        expect(response).to render_template :index
+      end
+
     end
 
-    it 'can be reached' do
-    get :index
-      expect(response).to render_template :index
+    context 'when is master' do
+      before do
+        sign_in master
+      end
+
+      it 'list all non archived messages' do
+        message
+        message1
+        get :index
+        expect(assigns(:messages).size).to eq(2)
+      end
     end
 
-    it 'list all non archived messages' do
-      message
-      archived_message
-      get :index
-      expect(assigns(:messages)).to eq([message])
-    end
+
+
+
 
   end
 
   describe '#show' do
-    before do
-      sign_in user
-    end
+    context 'when is normal user' do
+      before do
+        sign_in user
+      end
 
-    it 'find the message' do
+
+      it 'find the message' do
         get :show , params: {id: message.id}
         expect(assigns(:message)).to eq(message)
       end
 
-    it 'can be reached' do
-      get :show, params: {id: message.id}
-      expect(response).to render_template :show
+      it 'can be reached' do
+        get :show, params: {id: message.id}
+        expect(response).to render_template :show
+      end
+
+      it 'update status to read' do
+        get :show , params: {id: message.id}
+        message.reload
+        expect(message.status).to eq 'read'
+      end
+
+      it 'update visualized date' do
+        get :show , params: {id: message.id}
+        message.reload
+        expect(message.visualized).to_not be_nil
+      end
     end
 
-    it 'update status to read' do
-      get :show , params: {id: message.id}
-      message.reload
-      expect(message.status).to eq 'read'
+    context 'when is master' do
+      before do
+        sign_in master
+      end
+
+      it 'find the message' do
+        get :show , params: {id: message.id}
+        expect(assigns(:message)).to eq(message)
+      end
+
+      it 'does not update status to read' do
+        get :show , params: {id: message.id}
+        message.reload
+        expect(message.status).to eq 'unread'
+      end
+
+      it 'does not update visualized date' do
+        get :show , params: {id: message.id}
+        message.reload
+        expect(message.visualized).to be_nil
+      end
+
     end
 
-    it 'update visualized date' do
-      get :show , params: {id: message.id}
-      message.reload
-      expect(message.visualized).to_not be_nil
-    end
   end
 
   describe '#archive_multiple' do
@@ -115,6 +166,21 @@ RSpec.describe MessagesController, type: :controller do
     it 'archives one messages' do
       patch 'archive', params: {title: message.title, format: :js}
       expect(message.reload.archived?).to eq true
+    end
+  end
+
+  describe '#archived' do
+    before do
+      sign_in master
+    end
+
+    it 'list all archived messages' do
+      archived_message
+      archived_message1
+      message
+      read_message
+      get :archived
+      expect(assigns(:messages).size).to eq 2
     end
   end
 end

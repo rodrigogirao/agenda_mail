@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:edit,:update]
   resources :messages
+  get '/archived' => 'messages#archived', as: 'archived'
   patch '/archive' => 'messages#archive', as: 'archive', defaults: {format: 'js'}
   patch '/archive_multiple' => 'messages#archive_multiple', as: 'archive_multiple', defaults: {format: 'js'}
 end

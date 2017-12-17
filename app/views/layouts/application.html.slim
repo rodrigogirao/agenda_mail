@@ -21,6 +21,6 @@ html
         .main-panel
             = render 'layouts/messages'
             = render 'layouts/navbar'
-            .content data-unread="#{current_user.messages.unread.size}"
+            .content data-unread="#{user_messages}" data-archived="#{archived_count}"
                 = yield
             = render 'layouts/footer'

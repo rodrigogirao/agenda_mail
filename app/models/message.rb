@@ -9,10 +9,12 @@ class Message < ApplicationRecord
   belongs_to :receiver, class_name: 'User', foreign_key: 'to'
 
   delegate :name,:email, to: :sender, prefix: true
+  delegate :name, to: :receiver, prefix: true
 
   scope :sent_to, -> (user) { where(to: user.id).where.not(status: 2)}
   scope :all_sent_to, -> (user) { where(to: user.id)}
   scope :ordered, -> {order('created_at DESC')}
+  scope :master_messages, -> { where.not(status: 2)}
   attr_accessor :receiver_email
 
   def update_tracker

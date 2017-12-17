@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   validates_presence_of :name
 
+  enum permission: { normal: 0, master: 1}
+
   has_many :messages, foreign_key: 'to'
 
 end

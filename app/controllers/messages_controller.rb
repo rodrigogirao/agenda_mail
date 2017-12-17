@@ -18,12 +18,12 @@ class MessagesController < ApplicationController
   end
 
   def index
-    @messages = Message.includes(:sender).sent_to(current_user).ordered
+    @messages = current_user.master? ? Message.includes(:sender).master_messages.ordered : Message.includes(:sender).sent_to(current_user).ordered
   end
 
   def show
     @message = Message.find(params[:id])
-    if @message.unread?
+    if @message.unread? && !current_user.master?
       @message.read!
     end
   end
@@ -48,6 +48,9 @@ class MessagesController < ApplicationController
     end
   end
 
+  def archived
+    @messages = Message.archived
+  end
   private
 
   def message_params

@@ -8,5 +8,9 @@ FactoryBot.define do
     trait :invalid_email do
       email 'email'
     end
+
+    trait :master do
+      permission 1
+    end
   end
 end

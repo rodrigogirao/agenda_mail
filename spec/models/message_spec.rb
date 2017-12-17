@@ -5,6 +5,7 @@ RSpec.describe Message, type: :model do
   let(:user) { FactoryBot.create(:user)}
   let(:user1) { FactoryBot.create(:user)}
   let(:message) { FactoryBot.create(:message,from: user.id,to: user1.id)}
+  let(:message1) { FactoryBot.create(:message,from: user1.id,to: user.id)}
   let(:read_message) { FactoryBot.create(:message,:read,from: user.id,to: user1.id)}
   let(:archived_message) { FactoryBot.create(:message,:archived,from: user.id,to: user1.id)}
 
@@ -73,6 +74,12 @@ RSpec.describe Message, type: :model do
     it 'return ordered desc messages' do
       load_messages
       expect(Message.ordered).to eq [read_message,archived_message,message]
+    end
+
+    it 'return all non arquived messages' do
+      load_messages
+      message1
+      expect(Message.master_messages.size).to eq 3
     end
   end
 
