@@ -26,5 +26,5 @@
                       = link_to message.title, message_path(message), class: 'view_message'
                     td #{message_date(message)}
                     td.not_clickable
-                      = button_tag(type: 'button',class: 'btn btn-default btn-xs single_archive not_clickable') do
+                      = button_tag(type: 'button',class: 'btn btn-default btn-xs single_archive not_clickable',id: 'delete_message') do
                         i.fa.fa-2x.fa-trash.not_clickable

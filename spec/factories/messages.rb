@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :message do
-    title 'Titulo'
+    title {Faker::Name.name}
     content 'Lorem ipsum'
     from { FactoryBot.create(:user).id}
     to { FactoryBot.create(:user).id}

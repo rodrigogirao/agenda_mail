@@ -11,12 +11,12 @@
               .col-md-11
                 .form-group.login_input
                   = f.label 'Nome'
-                  = f.text_field :name, class: 'form-control border-input', placeholder: 'Nome'
+                  = f.text_field :name, class: 'form-control border-input', placeholder: 'Nome', required: true
             .row
               .col-md-11
                 .form-group.login_input
                   = f.label :email
-                  = f.text_field :email, class: 'form-control border-input', placeholder: 'Email'
+                  = f.text_field :email, class: 'form-control border-input', placeholder: 'Email', required: true
             .row
               .col-md-11
                 .form-group.login_input
@@ -25,13 +25,13 @@
                     em
                       | (minímo de #{@minimum_password_length} caracteres)
                   br/
-                  = f.password_field :password, class: 'form-control border-input', placeholder: 'Senha'
+                  = f.password_field :password, class: 'form-control border-input', placeholder: 'Senha', required: true
 
             .row
               .col-md-11
                 .form-group.login_input
                   = f.label 'Confirmação de senha'
-                  = f.password_field :password_confirmation, class: 'form-control border-input', placeholder: 'Senha'
+                  = f.password_field :password_confirmation, class: 'form-control border-input', placeholder: 'Senha', required: true
             .row
               .col-md-9
                 .form-group.login_input

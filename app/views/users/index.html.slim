@@ -12,5 +12,5 @@
             tbody
               - @users.each do |user|
                 tr.clickable_user data-href="#{messages_user_path(user)}"
-                  td #{user.name}
+                  td #{link_to user.name, messages_user_path(user)}
                   td #{user.email}

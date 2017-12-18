@@ -11,17 +11,17 @@
               .col-md-11
                 .form-group.login_input
                   = f.label 'Para:'
-                  = f.text_field :receiver_email, class: 'form-control border-input', placeholder: 'Email'
+                  = f.text_field :receiver_email, class: 'form-control border-input', placeholder: 'Email', required: true
             .row
               .col-md-11
                 .form-group.login_input
                   = f.label 'Assunto'
-                  = f.text_field :title, class: 'form-control border-input', placeholder: 'Assunto'
+                  = f.text_field :title, class: 'form-control border-input', placeholder: 'Assunto', required: true
             .row
               .col-md-11
                 .form-group.login_input
                   = f.label 'Conteúdo'
-                  = f.text_area :content, class: 'form-control border-input'
+                  = f.text_area :content, class: 'form-control border-input', required: true
 
 
             .text-center
