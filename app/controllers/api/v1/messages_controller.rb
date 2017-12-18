@@ -73,6 +73,11 @@ class Api::V1::MessagesController < ApplicationController
 
   private
 
+  def validate_master
+    @user = User.find_by_token(params[:token])
+    render json: {erro: 'Não autorizado.'}, status: 401 unless @user.try(:master?)
+  end
+
   def message_params
     params.require(:message).permit(
       :title,
