@@ -1,7 +1,6 @@
 class Api::V1::MessagesController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :validate_token
-  before_action :validate_master, only: [:archived]
 
   def index
     @messages = params[:permission] == 'master' ? Message.master_messages.ordered : Message.sent_to(@user).ordered
@@ -72,11 +71,6 @@ class Api::V1::MessagesController < ApplicationController
 
 
   private
-
-  def validate_master
-    @user = User.find_by_token(params[:token])
-    render json: {erro: 'Não autorizado.'}, status: 401 unless @user.try(:master?)
-  end
 
   def message_params
     params.require(:message).permit(

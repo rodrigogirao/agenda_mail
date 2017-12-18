@@ -1,9 +1,9 @@
 class Api::V1::UsersController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :validate_token
-  before_action :validate_master, only: [:index,:messages]
+
   def index
-    @users = User.normal
+    @users = User.select('name,email,permission').normal
     respond_to do |format|
       format.json { render :json => @users }
     end
@@ -40,11 +40,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
-
-  def validate_master
-    @user = User.find_by_token(params[:token])
-    render json: {erro: 'Não autorizado.'}, status: 401 unless @user.try(:master?)
-  end
 
   def user_params
     params.require(:user).permit(
