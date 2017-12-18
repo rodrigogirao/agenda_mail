@@ -1,6 +1,7 @@
 class Api::V1::MessagesController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :validate_token
+  before_action :validate_permission, only: [:create,:sent]
 
   def index
     @messages = params[:permission] == 'master' ? Message.master_messages.ordered : Message.sent_to(@user).ordered
@@ -25,8 +26,8 @@ class Api::V1::MessagesController < ApplicationController
 
   def show
     @message = Message.find(params[:id])
-    if @message.receiver == @user
-      if @message.unread? && params[:permission] != 'master' &&
+    if @message.receiver == @user || params[:permission] == 'master'
+      if @message.unread? && @message.receiver == @user
         @message.read!
       end
       respond_to do |format|
@@ -41,10 +42,8 @@ class Api::V1::MessagesController < ApplicationController
     @message = Message.find(params[:id])
     if @message.archived? || @message.receiver != @user
       render json: {erro: 'Mensagem já arquivada, Permissão Negada'}, status: 401
-
     else
       @message.archived! if (@message.receiver == @user || @user.try(:master?))
-
       respond_to do |format|
         format.json { render :json => {status: 200, message: 'Mensagem arquivada.'}}
       end
@@ -56,7 +55,6 @@ class Api::V1::MessagesController < ApplicationController
     messages.each do |message|
       message.archived! if (message.receiver == @user || @user.try(:master?))
     end
-
     respond_to do |format|
       format.json { render :json => {status: 200, message: 'Mensagens arquivadas.'}}
     end
@@ -75,9 +73,7 @@ class Api::V1::MessagesController < ApplicationController
         format.json { render :json => {status: 422, message: 'Houve um erro.'}}
       end
     end
-
   end
-
 
   private
 
@@ -102,4 +98,7 @@ class Api::V1::MessagesController < ApplicationController
     end
   end
 
+  def validate_permission
+    render json: {erro: 'Não autorizado.'} if params[:permission] == 'master'
+  end
 end

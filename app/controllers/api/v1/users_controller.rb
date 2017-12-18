@@ -1,9 +1,10 @@
 class Api::V1::UsersController < ApplicationController
   protect_from_forgery with: :null_session
   before_action :validate_token
+  before_action :validate_permission, only: [:update]
 
   def index
-    @users = User.select('name,email,permission').normal
+    @users = User.select('id,name,email,permission').normal
     respond_to do |format|
       format.json { render :json => @users }
     end
@@ -13,16 +14,13 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find(params[:id])
     @sent = Message.sent_from(@user)
     @received = Message.sent_to(@user)
-
     respond_to do |format|
       format.json { render :json => {sent: @sent, received: @received} }
     end
   end
 
   def update
-
     @user = User.find(params[:id])
-
     if user_params[:password].blank? || user_params[:password_confirmation].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
@@ -59,4 +57,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def validate_permission
+    render json: {erro: 'Não autorizado.'} if params[:permission] == 'master'
+  end
 end

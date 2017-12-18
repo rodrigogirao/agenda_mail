@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   load_and_authorize_resource #cancancan permissions
+  before_action :authenticate_user!
   before_action :set_user, except: [:index]
 
   # render edit form

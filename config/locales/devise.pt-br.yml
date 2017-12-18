@@ -13,7 +13,7 @@ pt-BR:
     failure:
       user:
         not_found_in_database: 'Usuário não cadastrado.'
-        invalid: 'CPF ou senha inválidos'
+        invalid: 'Email ou Senha inválidos'
       already_authenticated: ''
       unauthenticated: 'Você precisa registrar-se ou fazer login para continuar.'
       unconfirmed: 'Você deve confirmar sua conta antes de continuar.'

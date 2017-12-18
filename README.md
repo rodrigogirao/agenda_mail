@@ -7,7 +7,7 @@ Possui usuario master , que pode visualizar todas as mensangens , inclusive arqu
 
 Usuario Master:
 
-email: master@email.com
+email: master@email.com<br />
 password: 123456
 
 **API**
@@ -21,7 +21,8 @@ password: 123456
 
 * **Required**
 
-  `token=[string]`
+  `token=[string]` get your token in profile page<br />
+  It's a constant value for master token
 
 * **Permission**
 
@@ -32,46 +33,56 @@ password: 123456
 
 * **Messages**
 
-    `GET` | `/messages`
+    `GET` | `/messages`<br />
+    example: curl 'https://agendamail.herokuapp.com/api/v1/messages?token=XXX'
 
 * **Create Message**
 
-  `POST` | `/messages` | `message[title]=string&message[content]=string`
+  `POST` | `/messages` | `message[title]=string&message[content]=string`<br />
+  example: curl -X POST 'https://agendamail.herokuapp.com/api/v1/messages' -d 'message[receiver_email]=matheus@email.com&message[title]=APITEST&message[content]=CONTEUDO&token=XXX'
 
 * **Sent**
 
-    `GET` | `/messages/sent`
+    `GET` | `/messages/sent`<br />
+    example: curl 'https://agendamail.herokuapp.com/api/v1/messages/sent?token=XXX'
 
 * **Archived**
 
-  `GET` | `/messages/archived` | `permision=master`
+  `GET` | `/messages/archived` | `permision=master`<br />
+  example: curl 'https://agendamail.herokuapp.com/api/v1/messages/archived?token=apiagendamail42&permission=master'
 
 * **Show Message**
 
-  `GET` | `/messages/:id`
+  `GET` | `/messages/:id`<br />
+  example: curl 'https://agendamail.herokuapp.com/api/v1/messages/1?token=XXX'<br />
+  OR curl 'https://agendamail.herokuapp.com/api/v1/messages/1?token=XXX&permission=master'
 
 * **Archive Message**
 
-  `PATCH` | `/messages/:id/archive`
+  `PATCH` | `/messages/:id/archive`<br />
+  example: curl -X PATCH 'https://agendamail.herokuapp.com/api/v1/messages/1/archive?token=XXX'
 
 * **Archive Multiples**
 
-  `GET` | `/messages/archive_multiple` | `message_ids[]`
+  `GET` | `/messages/archive_multiple` | `message_ids[]`<br />
+  example: curl -g -X PATCH 'https://agendamail.herokuapp.com/api/v1/messages/archive_multiple?token=XXX&message_ids[]=1&message_ids[]=2'
 
 ----
 
 * **Users**
 
-  `GET` | `/users` | `permision=master`
+  `GET` | `/users` | `permision=master`<br />
+  example: curl 'https://agendamail.herokuapp.com/api/v1/users?token=XXX&permission=master'
 
 * **User Messages*
 
-  `GET` | `/users/:id/messages` | `permision=master`
+  `GET` | `/users/:id/messages` | `permision=master`<br />
+  curl 'https://agendamail.herokuapp.com/api/v1/users/1/messages?token=XXX&permission=master'
 
 * **Update Profile**
 
-  `PATCH` | `/users/:id` | `user[name]=string&user[email]=string&user[password]=string&user[password_confirmation]=string`
-
+  `PATCH` | `/users/:id` | `user[name]=string&user[email]=string&user[password]=string&user[password_confirmation]=string`<br />
+  example: curl -g -X PATCH 'https://agendamail.herokuapp.com/api/v1/users/1?token=XXX&user[name]=Mateus'
 
 ----
 **Clone**
@@ -84,6 +95,12 @@ bundle exec rake db:migrate
 bundle exec rake db:seed
 ```
 
+Create a `config/application.yml'
+
+```
+development:
+  api_key: XXXX
+```
 **Test**
 
 `bundle exec rspec`
