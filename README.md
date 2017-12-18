@@ -49,7 +49,7 @@ password: 123456
 * **Archived**
 
   `GET` | `/messages/archived` | `permision=master`<br />
-  example: curl 'https://agendamail.herokuapp.com/api/v1/messages/archived?token=apiagendamail42&permission=master'
+  example: curl 'https://agendamail.herokuapp.com/api/v1/messages/archived?token=XXXX&permission=master'
 
 * **Show Message**
 
