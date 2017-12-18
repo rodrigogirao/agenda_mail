@@ -3,6 +3,13 @@
 
 Aplicação para troca de mensagens entre usuários.
 
+Possui usuario master , que pode visualizar todas as mensangens , inclusive arquivadas.
+
+Usuario Master:
+
+email: master@email.com
+password: 123456
+
 **API**
 ----
 
@@ -66,4 +73,17 @@ Aplicação para troca de mensagens entre usuários.
   `PATCH` | `/users/:id` | `user[name]=string&user[email]=string&user[password]=string&user[password_confirmation]=string`
 
 
+----
+**Clone**
+Dowload the project and then
 
+```
+bundle install
+bundle exec rake db:create
+bundle exec rake db:migrate
+bundle exec rake db:seed
+```
+
+**Test**
+
+`bundle exec rspec`
