@@ -1,24 +1,69 @@
-# README
+**Agenda Mail**
+----
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Aplicação para troca de mensagens entre usuários.
 
-Things you may want to cover:
+**API**
+----
 
-* Ruby version
+`METHOD` | `URL` | `PARAMS`
 
-* System dependencies
+* **URL**
 
-* Configuration
+  https://agendamail.herokuapp.com/api/v1
 
-* Database creation
+* **Required**
 
-* Database initialization
+  `token=[string]`
 
-* How to run the test suite
+* **Permission**
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+  `permission=master` If is a admin request
 
-* ...
+----
+
+* **Messages**
+
+    `GET` | `/messages`
+
+* **Create Message**
+
+  `POST` | `/messages` | `message[title]=string&message[content]=string`
+
+* **Sent**
+
+    `GET` | `/messages/sent`
+
+* **Archived**
+
+  `GET` | `/messages/archived` | `permision=master`
+
+* **Show Message**
+
+  `GET` | `/messages/:id`
+
+* **Archive Message**
+
+  `PATCH` | `/messages/:id/archive`
+
+* **Archive Multiples**
+
+  `GET` | `/messages/archive_multiple` | `message_ids[]`
+
+----
+
+* **Users**
+
+  `GET` | `/users` | `permision=master`
+
+* **User Messages*
+
+  `GET` | `/users/:id/messages` | `permision=master`
+
+* **Update Profile**
+
+  `PATCH` | `/users/:id` | `user[name]=string&user[email]=string&user[password]=string&user[password_confirmation]=string`
+
+
+

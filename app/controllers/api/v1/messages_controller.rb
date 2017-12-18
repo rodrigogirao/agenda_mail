@@ -25,20 +25,29 @@ class Api::V1::MessagesController < ApplicationController
 
   def show
     @message = Message.find(params[:id])
-    if @message.unread? && params[:permission] != 'master' && @message.receiver == @user
-      @message.read!
-    end
-    respond_to do |format|
-      format.json { render :json => @message }
+    if @message.receiver == @user
+      if @message.unread? && params[:permission] != 'master' &&
+        @message.read!
+      end
+      respond_to do |format|
+        format.json { render :json => @message }
+      end
+    else
+      render json: {erro: 'Não autorizado.'}, status: 401
     end
   end
 
   def archive
     @message = Message.find(params[:id])
-    @message.archived! if (message.receiver == @user || @user.try(:master?))
+    if @message.archived? || @message.receiver != @user
+      render json: {erro: 'Mensagem já arquivada, Permissão Negada'}, status: 401
 
-    respond_to do |format|
-      format.json { render :json => {status: 200, message: 'Mensagem arquivada.'}}
+    else
+      @message.archived! if (@message.receiver == @user || @user.try(:master?))
+
+      respond_to do |format|
+        format.json { render :json => {status: 200, message: 'Mensagem arquivada.'}}
+      end
     end
   end
 
