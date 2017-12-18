@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource #cancancan permissions
   before_action :set_user, except: [:index]
 
   # render edit form
@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   # update user info
   def update
-    if user_params[:password].blank? || user_params[:password_confirmation].blank? # remove password if both fields are note filled
+    if user_params[:password].blank? || user_params[:password_confirmation].blank? # remove password if both fields are not filled
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
@@ -29,8 +29,8 @@ class UsersController < ApplicationController
   # get all messages non archived of a user , sent and received
   def messages
     @user = User.find(params[:id])
-    @sent = Message.sent_from(@user)
-    @received = Message.sent_to(@user)
+    @sent = Message.sent_from(@user).ordered
+    @received = Message.sent_to(@user).ordered
   end
 
   private
