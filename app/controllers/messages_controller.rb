@@ -2,8 +2,9 @@ class MessagesController < ApplicationController
   load_and_authorize_resource #cancancan permissions
   before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
-
+  before_action :verify_author, only: [:show]
   # render form for new message
+
   def new
     @message = Message.new
   end
@@ -75,6 +76,11 @@ class MessagesController < ApplicationController
       :receiver_email,
       :to
     )
+  end
+
+  def verify_author
+    message = Message.find(params[:id])
+    redirect_to messages_path unless (message.receiver == current_user && !message.archived?) || current_user.master?
   end
 
 end
