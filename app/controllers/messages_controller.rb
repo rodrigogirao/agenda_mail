@@ -80,7 +80,7 @@ class MessagesController < ApplicationController
 
   def verify_author
     message = Message.find(params[:id])
-    redirect_to messages_path unless (message.receiver == current_user && !message.archived?) || current_user.master?
+    redirect_to messages_path unless ([message.receiver,message.sender].include?(current_user) && !message.archived?) || current_user.master?
   end
 
 end
