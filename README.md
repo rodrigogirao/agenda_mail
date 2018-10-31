@@ -3,7 +3,7 @@
 
 Aplicação para troca de mensagens entre usuários.
 
-Possui usuario master , que pode visualizar todas as mensangens , inclusive arquivadas.
+Possui usuário master , que pode visualizar todas as mensangens , inclusive arquivadas.
 
 Usuario Master:
 
